@@ -1,24 +1,24 @@
 $(document).ready(function(){
 	homeView();
-	$('.home').on('tap', renderHomeView);
-    $('#main').on('tap', '.details', function(e){
-        event.preventDefault();
-    	renderDetailView(e, $(this).attr('href'));
+	$('.home').on('tap click', renderHomeView);
+    $('#main').on('tap click', '.details', function(e){
+        e.preventDefault();
+    	renderPageView(e, $(this).attr('href'));
     	return false;
     });
 
 });
 
 $( document ).on("mobileinit", function(){
-	$.mobile.loader.prototype.options.text = "Pobieram treœæ ...";
+	$.mobile.loader.prototype.options.text = "Pobieram dane z serwera ...";
 	$.mobile.loader.prototype.options.textVisible = true;
 	$.mobile.loader.prototype.options.theme = "a";
 	$.mobile.loader.prototype.options.html = "";
 });
 
 
-function renderHomeView(event){
-	event.preventDefault();
+function renderHomeView(e){
+	e.preventDefault();
 	homeView();
 }
 
@@ -26,19 +26,20 @@ function homeView(){
 	$('#main').empty();
     //$('.home').addClass("ui-btn-active");
     $('#main').html(template("home"));
-    var url = 'http://intranet.domlekarski.pl/sample.json';
+    var url = host+'/api/index/page_id/8';
     $.mobile.loading('show');
     $.ajax({
         url : url,
         dataType : 'json',
         success : function(data){
             $.mobile.loading('hide');
-            $.each(data , function(i , obj){
-                // alert(JSON.stringify(obj));
-                var template = $("#news-template").html();
-                obj.publish_at = $.timeago(obj.publish_at);
-                $("#news").append(Mustache.to_html(template,obj));
-                $('#news').listview('refresh');
+            $.each(data['index'] , function(i , obj){
+                //alert(JSON.stringify(obj));
+                var template = $("#index-template").html();
+                //obj.publish_at = $.timeago(obj.publish_at);
+                obj['url'] = obj['_api_url'];
+                $("#index").append(Mustache.to_html(template,obj));
+                $('#index').listview('refresh');
             });
         },
         error : function(XMLHttpRequest,textStatus, errorThrown) {
@@ -52,7 +53,7 @@ function homeView(){
 
 }
 
-function renderDetailView(event, url){
+function renderPageView(event, url){
     event.preventDefault();
     $('#main').empty();
 
@@ -64,8 +65,13 @@ function renderDetailView(event, url){
         success : function(data){
             $.mobile.loading('hide');
 	        // alert(JSON.stringify(obj));
-	        var template = $("#details-template").html();
-	        $("#main").html(Mustache.to_html(template,data));
+            var page = data['page'];
+	        var template = $("#page-template").html();
+	        if( ('content' in page) && ('main' in page['content']) )
+	        {
+	        	page['content'] = page['content']['main'].join('<br>');
+	        }
+	        $("#main").html(Mustache.to_html(template,page));
         },
         error : function(XMLHttpRequest,textStatus, errorThrown) {
             $.mobile.loading('hide');
