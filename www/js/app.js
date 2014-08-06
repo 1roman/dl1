@@ -1,11 +1,23 @@
 $(document).ready(function(){
 	homeView();
-	$('.home').on('tap click', renderHomeView);
-    $('#main').on('tap click', '.details', function(e){
+	$('.home').on('tap', renderHomeView);
+    $('#main').on('tap', '.details', function(e){
         e.preventDefault();
     	renderPageView(e, $(this).attr('href'));
     	return false;
     });
+    /*
+    $('#main').on('tap', '.content a', function(e){
+        e.preventDefault();
+        //alert('external');
+        if( 'app' in navigator ){
+        	navigator.app.loadUrl(encodeURI($(this).attr('href')), { openExternal:true });
+        }else{
+        	window.open(encodeURI($(this).attr('href')), '_system', 'location=yes');
+        }
+    	return false;
+    });
+    */
 
 });
 
@@ -34,6 +46,9 @@ function homeView(){
         success : function(data){
             $.mobile.loading('hide');
             $.each(data['index'] , function(i , obj){
+            	if( obj['id'] == 8 ){
+            		return true;
+            	}
                 //alert(JSON.stringify(obj));
                 var template = $("#index-template").html();
                 //obj.publish_at = $.timeago(obj.publish_at);
@@ -59,19 +74,30 @@ function renderPageView(event, url){
 
     $.mobile.loading('show');
 
+    if( url.indexOf('http://') < 0 )
+    {
+    	url = host + url;
+    }
+
     $.ajax({
         url : url,
         dataType : 'json',
         success : function(data){
             $.mobile.loading('hide');
-	        // alert(JSON.stringify(obj));
+	        //alert(JSON.stringify(obj));
             var page = data['page'];
-	        var template = $("#page-template").html();
-	        if( ('content' in page) && ('main' in page['content']) )
-	        {
+            var template = $("#page-template").html();
+            if( !page['title'] ){
+            	page['title'] = page['name'];
+            }
+	        if( ('content' in page) && ('main' in page['content']) ){
 	        	page['content'] = page['content']['main'].join('<br>');
 	        }
 	        $("#main").html(Mustache.to_html(template,page));
+
+	        $('.content a').each(function(i,a){
+	        	$(this).attr('onclick', "window.open('"+encodeURI($(this).attr("href"))+"'), '_system', 'location=yes'); return false;");
+	        });
         },
         error : function(XMLHttpRequest,textStatus, errorThrown) {
             $.mobile.loading('hide');
