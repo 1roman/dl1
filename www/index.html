@@ -9,6 +9,7 @@
 
   <link rel="stylesheet" href="css/vendor/jquery.mobile-1.3.1.min.css">
   <link rel="stylesheet" href="css/vendor/jquery.loadmask.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <script type="text/javascript">
     var host = 'http://intranet.domlekarski.pl';
@@ -18,29 +19,58 @@
 
 <!-- Home -->
 <div data-role="page" id="mainPage">
-  <div data-role="header" data-position="fixed">
-    <h1>Dom Lekarski</h1>
-    <a href="http://www.domlekarski.pl" data-icon="edit" data-theme="b" class="www ui-btn-right" data-role="button" data-inline="true" data-ajax="false">www</a>
+	<div data-role="header" data-position="fixed">
+		<h1>Dom Lekarski</h1>
 
-    <div data-role="navbar">
-      <ul>
-        <li><a href="#home" class="home ui-btn-active" data-icon="home">Home</a></li>
-      </ul>
-    </div>
-  </div>
+		<a href="#credits" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop" data-icon="info" data-theme="b">info</a>
+		<a href="http://www.domlekarski.pl" data-icon="edit" data-theme="b" class="www ui-btn-right" data-role="button" data-inline="true" data-ajax="false">www</a>
 
-  <div id="main" data-role="content">
-  </div>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#home" class="home ui-btn-active" data-icon="home">Home</a></li>
+			</ul>
+		</div>
+	</div>
 
-  <div data-theme="a" data-role="footer">
-    <h3>&copy; Dom Lekarski</h3>
-  </div>
+	<div id="main" data-role="content">
+	</div>
+
+	<div data-theme="a" data-role="footer">
+		<h3>&copy; Dom Lekarski</h3>
+	</div>
+
+
+	<div id="credits" data-role="popup" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+
+	    <div data-role="header" data-theme="a" class="ui-corner-top">
+			<h1>O aplikacji</h1>
+		</div>
+
+	    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+	    	<div style="text-align:center;">
+	    		<img alt="Dom Lekarski" src="images/dom-lekarski-logo.png" width="180">
+	    		<p>Aplikacja zrealizowana w ramach projektu CSR</p>
+	    	</div>
+			<div class="ui-grid-c">
+			  <div class="ui-block-a"><a href="http://www.programszwajcarski.gov.pl/"><img alt="POKL" src="images/logo_SwissContribution.png" width="180"></a></div>
+			  <div class="ui-block-b"><a href="http://www.parp.gov.pl"><img alt="PARP" src="images/logo_parp.png"></a></div>
+			  <div class="ui-block-c"><a href="http://www.programszwajcarski.gov.pl/"><img alt="UE" src="images/logo_bundes.png" width="180"></a></div>
+			</div>
+			<div>
+			  <p>Projekt współfinansowany przez Szwajcarię w ramach szwajcarskiego programu współpracy z nowymi krajami członkowskimi Unii Europejskiej</p>
+			</div>
+			<div style="text-align:center;">
+	        	<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Zamknij</a>
+	        </div>
+		</div>
+	</div>
+
 </div>
 
 <script type="text/x-mustache-template" id="home-template">
-  <ul id="index" data-role="listview" data-filter="true" data-filter-placeholder="Aktualności" data-inset="true">
+	<ul id="index" data-role="listview" data-inset="true">
 
-  </ul>
+	</ul>
 </script>
 
 <script type="text/x-mustache-template" id="index-template">
@@ -60,6 +90,8 @@
   </div>
 
 </script>
+
+
 
 
 <script src="phonegap.js"></script>
