@@ -74,10 +74,7 @@ function renderPageView(event, url){
 
     $.mobile.loading('show');
 
-    if( url.indexOf('http://') < 0 )
-    {
-    	url = host + url;
-    }
+    url = host + url;
 
     $.ajax({
         url : url,
