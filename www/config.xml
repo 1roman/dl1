@@ -2,7 +2,7 @@
 <widget id="pl.domlekarski.intranet" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Dom Lekarski CSR</name>
     <description>
-        Aplikacja wspierający CSR w firmie Dom Lekarski
+        Aplikacja wspierająca CSR w firmie Dom Lekarski
     </description>
     <author email="biuro@lepszyprojekt.pl" href="http://www.lepszyprojekt.pl/">
         LepszyProjekt.pl
